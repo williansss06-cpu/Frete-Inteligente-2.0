@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Frete Inteligente - Painel da Empresa</title>
+
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Arial; background: #f4f6f8; }
+.container { max-width: 1100px; margin: auto; padding: 28px; }
+
+.topbar {
+  display: flex; justify-content: space-between;
+  align-items: center; margin-bottom: 24px;
+}
+
+h1 { margin: 0; }
+.sub { color: #64748b; }
+
+.btn { background:#0f766e;color:#fff;border:none;padding:12px;border-radius:10px;cursor:pointer }
+
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+
+.card {
+  background: #fff; padding: 20px;
+  border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,.08);
+}
+
+input, select {
+  width:100%; padding:10px; margin-bottom:10px;
+  border-radius:10px; border:1px solid #ccc;
+}
+
+.msg { font-size: 13px; margin-top: 10px; }
+.sucesso { color: green; }
+.erro { color: red; }
+
+.usuario-item { padding:8px; border-bottom:1px solid #eee; }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="topbar">
+  <div>
+    <h1>Painel da Empresa</h1>
+    <div class="sub">Gestão de usuários</div>
+  </div>
+  <button class="btn" onclick="logout()">Sair</button>
+</div>
+
+<div class="grid">
+
+<div class="card">
+<h3>Criar usuário</h3>
+
+<input id="usuario_nome" placeholder="Nome" />
+<input id="usuario_email" placeholder="Email" />
+<input id="usuario_senha" placeholder="Senha" type="password"/>
+
+<select id="usuario_perfil">
+<option value="admin_empresa">Admin</option>
+<option value="analista">Analista</option>
+</select>
+
+<button class="btn" onclick="criarUsuario()">Criar</button>
+<div id="msg_usuario" class="msg"></div>
+</div>
+
+<div class="card">
+<h3>Acesso</h3>
+
+<button class="btn" onclick="abrirSistema()">Abrir Sistema</button>
+
+<hr>
+
+<div id="listaUsuarios">Carregando...</div>
+</div>
+
+</div>
+</div>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "SUA_KEY",
+  authDomain: "SEU_AUTH",
+  databaseURL: "SUA_URL",
+  projectId: "SEU_ID"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+</script>
+
+<script>
+
+// 🔒 VALIDAÇÃO DE ACESSO
+(function validarAcesso() {
+  const usuarioId = localStorage.getItem("usuario_id");
+  const perfil = localStorage.getItem("perfil");
+
+  if (!usuarioId) {
+    alert("Sessão expirada");
+    window.location.href = "../Login/"; ✅
+    return;
+  }
+
+  if (perfil === "admin_plataforma") {
+    window.location.href = "../admin/"; ✅
+    return;
+  }
+})();
+
+// 📊 CARREGAR USUÁRIOS
+function carregarUsuarios() {
+  const lista = document.getElementById("listaUsuarios");
+
+  db.ref("usuarios").once("value", snap => {
+    let html = "";
+    snap.forEach(item => {
+      const u = item.val();
+      html += `<div class="usuario-item">
+        ${u.nome} - ${u.email}
+      </div>`;
+    });
+
+    lista.innerHTML = html || "Nenhum usuário";
+  });
+}
+
+carregarUsuarios();
+
+// ➕ CRIAR USUÁRIO
+async function criarUsuario() {
+  const msg = document.getElementById("msg_usuario");
+
+  const nome = usuario_nome.value;
+  const email = usuario_email.value;
+  const senha = usuario_senha.value;
+  const perfil = usuario_perfil.value;
+
+  if (!nome || !email || !senha) {
+    msg.innerText = "Preencha tudo";
+    msg.className = "msg erro";
+    return;
+  }
+
+  await db.ref("usuarios").push({
+    nome, email, senha, perfil
+  });
+
+  msg.innerText = "Usuário criado!";
+  msg.className = "msg sucesso";
+
+  carregarUsuarios();
+}
+
+// 🚀 ABRIR SISTEMA (CORRIGIDO)
+function abrirSistema() {
+  window.location.href = "./sistema/index.html";
+}
+
+// 🚪 LOGOUT (CORRIGIDO)
+function logout() {
+  localStorage.clear();
+  window.location.href = "./Login/index.html";
+}
+
+</script>
+
+</body>
+</html>
