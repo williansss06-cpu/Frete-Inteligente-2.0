@@ -1,284 +1,232 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Frete PRO - Login Inteligente</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Frete PRO - Login Inteligente</title>
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    }
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
 
-    /* VIDEO BACKGROUND */
-    .video-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -2;
-      overflow: hidden;
-    }
+/* VIDEO BACKGROUND */
+.video-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  overflow: hidden;
+}
 
-    .video-bg video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+.video-bg video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
-    /* OVERLAY DARK */
-    .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, rgba(30, 27, 75, 0.85), rgba(15, 23, 42, 0.92));
-      z-index: -1;
-    }
+/* OVERLAY DARK */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(30,27,75,0.85), rgba(15,23,42,0.92));
+  z-index: -1;
+}
 
-    /* CONTAINER */
-    .container {
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
-    }
+/* CONTAINER */
+.container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
 
-    /* CARD GLASS */
-    .card {
-      width: 1100px;
-      max-width: 100%;
-      height: auto;
-      min-height: 560px;
-      display: flex;
-      flex-wrap: wrap;
-      border-radius: 32px;
-      overflow: hidden;
-      backdrop-filter: blur(12px);
-      background: rgba(15, 25, 45, 0.3);
-      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
-      transition: transform 0.2s ease;
-    }
+/* CARD GLASS */
+.card {
+  width: 1100px;
+  max-width: 100%;
+  height: auto;
+  min-height: 600px;
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 32px;
+  overflow: hidden;
+  backdrop-filter: blur(12px);
+  background: rgba(15, 25, 45, 0.3);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.1);
+}
 
-    /* LEFT BRAND */
-    .left {
-      flex: 1.2;
-      min-width: 260px;
-      background: linear-gradient(145deg, #6c2bd9, #4c1d95);
-      color: white;
-      padding: 3rem 2rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      backdrop-filter: blur(4px);
-    }
+/* LEFT BRAND */
+.left {
+  flex: 1.2;
+  min-width: 260px;
+  background: linear-gradient(145deg, #6c2bd9, #4c1d95);
+  color: white;
+  padding: 3rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
-    .left h1 {
-      font-size: 2.4rem;
-      font-weight: 800;
-      margin-bottom: 1.2rem;
-      letter-spacing: -0.5px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+.left h1 {
+  font-size: 2.4rem;
+  font-weight: 800;
+  margin-bottom: 1.2rem;
+  letter-spacing: -0.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 
-    .left p {
-      opacity: 0.92;
-      line-height: 1.5;
-      font-size: 1rem;
-      font-weight: 400;
-    }
+.left p {
+  opacity: 0.92;
+  line-height: 1.5;
+  font-size: 1rem;
+}
 
-    /* RIGHT FORM */
-    .right {
-      flex: 1.5;
-      background: rgba(255, 255, 255, 0.96);
-      padding: 2.5rem 2rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      backdrop-filter: blur(2px);
-    }
+/* RIGHT FORM */
+.right {
+  flex: 1.5;
+  background: rgba(255,255,255,0.96);
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
-    /* ABAS */
-    .abas {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 2rem;
-      border-bottom: 2px solid #e2e8f0;
-      padding-bottom: 8px;
-    }
+/* ABAS */
+.abas {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 8px;
+}
 
-    .aba {
-      font-size: 1.1rem;
-      font-weight: 600;
-      padding: 8px 16px;
-      border-radius: 40px;
-      cursor: pointer;
-      color: #64748b;
-      transition: all 0.2s;
-    }
+.aba {
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 8px 24px;
+  border-radius: 40px;
+  cursor: pointer;
+  color: #64748b;
+  transition: all 0.2s;
+}
 
-    .aba.ativa {
-      background: #7c3aed;
-      color: white;
-      box-shadow: 0 4px 8px rgba(124, 58, 237, 0.2);
-    }
+.aba.ativa {
+  background: #7c3aed;
+  color: white;
+  box-shadow: 0 4px 8px rgba(124,58,237,0.2);
+}
 
-    .escondido {
-      display: none;
-    }
+.escondido {
+  display: none;
+}
 
-    /* INPUTS */
-    .input-group {
-      margin-bottom: 1.2rem;
-    }
+/* INPUTS */
+.input-group {
+  margin-bottom: 1.2rem;
+}
 
-    input,
-    select {
-      width: 100%;
-      padding: 14px 18px;
-      border-radius: 14px;
-      border: 1.5px solid #e2e8f0;
-      font-size: 0.95rem;
-      background: white;
-      transition: all 0.2s ease;
-      font-weight: 500;
-    }
+input, select {
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: 14px;
+  border: 1.5px solid #e2e8f0;
+  font-size: 0.95rem;
+  background: white;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
 
-    input:focus,
-    select:focus {
-      outline: none;
-      border-color: #7c3aed;
-      box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
-    }
+input:focus, select:focus {
+  outline: none;
+  border-color: #7c3aed;
+  box-shadow: 0 0 0 3px rgba(124,58,237,0.2);
+}
 
-    small {
-      display: block;
-      margin-top: -6px;
-      margin-bottom: 12px;
-      color: #64748b;
-      font-size: 0.7rem;
-    }
+small {
+  display: block;
+  margin-top: -6px;
+  margin-bottom: 12px;
+  color: #64748b;
+  font-size: 0.7rem;
+}
 
-    /* BUTTON */
-    button {
-      width: 100%;
-      padding: 14px;
-      border: none;
-      border-radius: 40px;
-      background: #7c3aed;
-      color: white;
-      font-weight: 700;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: all 0.25s;
-      margin-top: 8px;
-      box-shadow: 0 6px 14px rgba(124, 58, 237, 0.25);
-    }
+/* BUTTON */
+button {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 40px;
+  background: #7c3aed;
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.25s;
+  margin-top: 8px;
+  box-shadow: 0 6px 14px rgba(124,58,237,0.25);
+}
 
-    button:hover:not(:disabled) {
-      background: #5b21b6;
-      transform: translateY(-2px);
-      box-shadow: 0 10px 20px rgba(91, 33, 182, 0.3);
-    }
+button:hover:not(:disabled) {
+  background: #5b21b6;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(91,33,182,0.3);
+}
 
-    button:active:not(:disabled) {
-      transform: translateY(1px);
-    }
+button:active:not(:disabled) {
+  transform: translateY(1px);
+}
 
-    button.secondary {
-      background: transparent;
-      border: 2px solid #7c3aed;
-      color: #7c3aed;
-      box-shadow: none;
-      margin-top: 12px;
-    }
+/* MENSAGENS */
+.msg {
+  margin-top: 16px;
+  font-size: 0.85rem;
+  min-height: 40px;
+  color: #dc2626;
+  font-weight: 500;
+}
 
-    button.secondary:hover {
-      background: #f5f3ff;
-      transform: none;
-    }
+.msg.sucesso {
+  color: #10b981;
+}
 
-    /* MENSAGENS */
-    .msg {
-      margin-top: 16px;
-      font-size: 0.85rem;
-      min-height: 40px;
-      color: #dc2626;
-      font-weight: 500;
-    }
+.footer {
+  text-align: center;
+  font-size: 0.8rem;
+  margin-top: 12px;
+}
 
-    .msg.sucesso {
-      color: #10b981;
-    }
+.footer a {
+  color: #7c3aed;
+  text-decoration: none;
+}
 
-    /* TOAST (caso queira manter, mas já temos msg inline) */
-    .toast-notification {
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      background: #1e293b;
-      color: white;
-      padding: 14px 24px;
-      border-radius: 16px;
-      font-size: 0.9rem;
-      font-weight: 500;
-      z-index: 10000;
-      animation: slideIn 0.3s ease;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-      border-left: 4px solid #7c3aed;
-      max-width: 380px;
-      backdrop-filter: blur(8px);
-    }
-
-    @keyframes slideIn {
-      from {
-        transform: translateX(100%);
-        opacity: 0;
-      }
-      to {
-        transform: translateX(0);
-        opacity: 1;
-      }
-    }
-
-    @keyframes slideOut {
-      from {
-        transform: translateX(0);
-        opacity: 1;
-      }
-      to {
-        transform: translateX(100%);
-        opacity: 0;
-      }
-    }
-
-    /* RESPONSIVO */
-    @media (max-width: 720px) {
-      .card {
-        flex-direction: column;
-        border-radius: 28px;
-        min-height: auto;
-      }
-
-      .left {
-        text-align: center;
-        padding: 2rem;
-      }
-
-      .right {
-        padding: 2rem 1.5rem;
-      }
-    }
-  </style>
+/* RESPONSIVO */
+@media (max-width: 720px) {
+  .card {
+    flex-direction: column;
+    border-radius: 28px;
+  }
+  .left {
+    text-align: center;
+    padding: 2rem;
+  }
+  .right {
+    padding: 2rem 1.5rem;
+  }
+}
+</style>
 </head>
 <body>
 
@@ -300,13 +248,12 @@
     </div>
 
     <div class="right">
-      <!-- ABAS -->
       <div class="abas">
         <div class="aba ativa" onclick="mostrarAba('login')">🔐 Login</div>
         <div class="aba" onclick="mostrarAba('cadastro')">📝 Cadastrar</div>
       </div>
 
-      <!-- FORMULÁRIO DE LOGIN -->
+      <!-- ABA LOGIN -->
       <div id="abaLogin">
         <div class="input-group">
           <input type="email" id="login_email" placeholder="seu@email.com" autocomplete="email">
@@ -316,12 +263,12 @@
         </div>
         <button onclick="login()">Acessar plataforma →</button>
         <div id="msg_login" class="msg"></div>
-        <div class="footer" style="margin-top: 12px; text-align: center; font-size: 0.8rem;">
-          <a href="#" style="color:#7c3aed; text-decoration:none;">Esqueci minha senha</a>
+        <div class="footer">
+          <a href="#">Esqueci minha senha</a>
         </div>
       </div>
 
-      <!-- FORMULÁRIO DE CADASTRO -->
+      <!-- ABA CADASTRO -->
       <div id="abaCadastro" class="escondido">
         <div class="input-group">
           <input type="text" id="cadastro_cnpj" placeholder="CNPJ da empresa (apenas números)" maxlength="18" oninput="mascaraCNPJ(this)">
@@ -367,11 +314,11 @@
   const firebaseConfig = {
     apiKey: "SUA_API_KEY",                 // Ex: "AIzaSyD-xxxxxxxxxxxxx"
     authDomain: "SEU_AUTH_DOMAIN",         // Ex: "seuprojeto.firebaseapp.com"
-    databaseURL: "https://rota-22c3b-default-rtdb.firebaseio.com/", // ← mantenha ou altere
+    databaseURL: "https://rota-22c3b-default-rtdb.firebaseio.com/", // ← exemplo
     projectId: "SEU_PROJECT_ID"            // Ex: "rota-22c3b"
   };
 
-  // Inicializa o Firebase
+  // Inicializa Firebase
   firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
 
@@ -402,7 +349,7 @@
     }
   }
 
-  // ==================== FUNÇÃO DE LOGIN ====================
+  // ==================== LOGIN ====================
   async function login() {
     const email = document.getElementById("login_email").value.trim();
     const senha = document.getElementById("login_senha").value.trim();
@@ -435,13 +382,13 @@
         return;
       }
 
-      // Salva dados da sessão
+      // Sessão
       localStorage.setItem("usuario_id", user.id);
       localStorage.setItem("cliente_cnpj", user.cnpj || "");
       localStorage.setItem("perfil", user.perfil || "");
       localStorage.setItem("usuario_nome", user.nome || "");
 
-      // Redireciona conforme perfil
+      // Redirecionamento (ajuste os caminhos conforme sua estrutura)
       if (user.perfil === "admin_plataforma") {
         window.location.href = "../admin/";
       } else {
@@ -454,10 +401,10 @@
     }
   }
 
-  // ==================== FUNÇÃO DE CADASTRO ====================
+  // ==================== CADASTRO ====================
   async function cadastrarUsuario() {
     const cnpjInput = document.getElementById("cadastro_cnpj").value;
-    const cnpj = cnpjInput.replace(/\D/g, ''); // apenas números
+    const cnpj = cnpjInput.replace(/\D/g, '');
     const nome = document.getElementById("cadastro_nome").value.trim();
     const email = document.getElementById("cadastro_email").value.trim();
     const senha = document.getElementById("cadastro_senha").value.trim();
@@ -468,9 +415,8 @@
     msg.textContent = "";
     msg.className = "msg";
 
-    // Validações
     if (!cnpj || cnpj.length !== 14) {
-      msg.textContent = "CNPJ inválido. Digite os 14 números (sem pontos, barras ou traços).";
+      msg.textContent = "CNPJ inválido. Digite os 14 números.";
       return;
     }
     if (!nome) {
@@ -500,14 +446,13 @@
         return;
       }
 
-      // Verifica se a empresa já existe pelo CNPJ (apenas números)
+      // Verifica empresa pelo CNPJ (números)
       let empresaId = null;
       const snapEmpresa = await db.ref("empresas").orderByChild("cnpj").equalTo(cnpj).once("value");
       
       if (snapEmpresa.exists()) {
         snapEmpresa.forEach((c) => { empresaId = c.key; });
       } else {
-        // Cria nova empresa
         const novaEmpresa = db.ref("empresas").push();
         empresaId = novaEmpresa.key;
         await novaEmpresa.set({
@@ -519,12 +464,12 @@
         });
       }
 
-      // Cria o usuário
+      // Cria usuário
       const novoUsuario = db.ref("usuarios").push();
-      const dadosUsuario = {
+      await novoUsuario.set({
         nome: nome,
         email: email,
-        senha: senha,   // ATENÇÃO: Em produção, use hash!
+        senha: senha,   // ⚠️ Em produção: use hash + Firebase Auth
         telefone: telefone || "",
         perfil: perfil,
         cnpj: cnpj,
@@ -532,15 +477,12 @@
         empresa_id: empresaId,
         status: "pendente",
         data_cadastro: Date.now()
-      };
+      });
 
-      await novoUsuario.set(dadosUsuario);
-
-      // Sucesso
       msg.className = "msg sucesso";
       msg.innerHTML = "✅ Cadastro realizado! Aguarde liberação de acesso.";
 
-      // Limpa formulário
+      // Limpa campos
       document.getElementById("cadastro_cnpj").value = "";
       document.getElementById("cadastro_nome").value = "";
       document.getElementById("cadastro_email").value = "";
@@ -548,7 +490,7 @@
       document.getElementById("cadastro_telefone").value = "";
       document.getElementById("cadastro_perfil").value = "";
 
-      // Volta para aba de login após 3 segundos
+      // Volta para login após 3s
       setTimeout(() => mostrarAba('login'), 3000);
 
     } catch (error) {
@@ -557,5 +499,6 @@
     }
   }
 </script>
+
 </body>
 </html>
